@@ -75,6 +75,7 @@ void book_display(book_t *b);
 
 // owner functions
 void owner_area(user_t *u);
+void appoint_librarian();
 
 // librarian functions
 void librarian_area(user_t *u);
