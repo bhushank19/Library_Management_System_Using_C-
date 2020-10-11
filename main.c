@@ -13,9 +13,18 @@ void date_tester() {
 	printf("date diff: %d\n", diff);
 }
 
+void tester() {
+	user_t u;
+	book_t b;
+	user_accept(&u);
+	user_display(&u);
+	book_accept(&b);
+	book_display(&b);
+}
 
 int main() {
 	printf("Hello Library!\n");
-    date_tester();
+   // date_tester();
+   tester();
 	return 0;
 }
