@@ -3,6 +3,8 @@
 
 #include "date.h"
 
+#define USER_DB		"users.db"
+
 #define ROLE_OWNER 		"owner"
 #define ROLE_LIBRARIAN 	"librarian"
 #define ROLE_MEMBER 	"member"
@@ -70,5 +72,18 @@ void book_accept(book_t *b);
 void book_display(book_t *b);
 
 // owner functions
+void owner_area(user_t *u);
+
+// librarian functions
+void librarian_area(user_t *u);
+
+// member functions
+void member_area(user_t *u);
+
+// common functions
+void sign_in();
+void sign_up();
+void edit_profile(user_t *u);
+void change_password(user_t *u);
 
 #endif

@@ -22,9 +22,33 @@ void tester() {
 	book_display(&b);
 }
 
+void sign_in() {
+	// find the user in the users file.
+	// check input password is correct.
+	// if correct, call user_area() based on its role.
+}
+
+void sign_up() {
+	// input user details from the user.
+	// write user details into the users file.
+}
+
 int main() {
-	printf("Hello Library!\n");
    // date_tester();
-   tester();
+   //tester();
+   int choice;
+	do {
+		printf("\n\n1. Sign In\n2. Sign Up\nEnter choice: ");
+		scanf("%d", &choice);
+		switch (choice)
+		{
+		case 1: // Sign In
+			sign_in();
+			break;
+		case 2:	// Sign Up
+			sign_up();	
+			break;
+		}
+	}while(choice != 0);
 	return 0;
 }
