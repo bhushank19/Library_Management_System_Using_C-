@@ -6,3 +6,4 @@ private/
 .metadata/
 bin/
 target/
+*.db

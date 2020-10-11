@@ -41,3 +41,21 @@ void book_accept(book_t *b) {
 void book_display(book_t *b) {
 	printf("%d, %s, %s, %s, %.2lf, %s\n", b->id, b->name, b->author, b->subject, b->price, b->isbn);
 }
+
+
+void user_add(user_t *u) {
+	// open the file for appending the data
+	FILE *fp;
+	fp = fopen(USER_DB, "ab");
+	if(fp == NULL) {
+		perror("failed to open users file");
+		return;
+	}
+	
+	// write user data into the file
+	fwrite(u, sizeof(user_t), 1, fp);
+	printf("user added into file.\n");
+	
+	// close the file
+	fclose(fp);
+}

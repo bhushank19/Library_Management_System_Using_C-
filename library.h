@@ -86,4 +86,5 @@ void sign_up();
 void edit_profile(user_t *u);
 void change_password(user_t *u);
 
+void user_add(user_t *u);
 #endif
