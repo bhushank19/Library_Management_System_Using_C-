@@ -19,6 +19,8 @@
 #define BOOK_RETURN_DAYS		7
 #define MEMBERSHIP_MONTH_DAYS	30
 
+#define EMAIL_OWNER		"sarang@sunbeaminfo.com"
+
 typedef struct user {
 	int id;
 	char name[30];
@@ -87,4 +89,5 @@ void edit_profile(user_t *u);
 void change_password(user_t *u);
 
 void user_add(user_t *u);
+int user_find_by_email(user_t *u, char email[]);
 #endif
