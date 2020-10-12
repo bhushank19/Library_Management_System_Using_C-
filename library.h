@@ -89,6 +89,8 @@ void bookcopy_add();
 void bookcopy_checkavail_details();
 void bookcopy_issue();
 void bookcopy_changestatus(int bookcopy_id, char status[]);
+void display_issued_bookcopies(int member_id);
+void bookcopy_return();
 
 // member functions
 void member_area(user_t *u);

@@ -39,8 +39,9 @@ void librarian_area(user_t *u) {
 			case 10: //Issue Book Copy
 			         bookcopy_issue();
 				     break;
-			case 11:
-				break;
+			case 11: // Return Book Copy
+				     bookcopy_return();
+				     break;
 			case 12:
 				break;
 			case 13:
@@ -217,5 +218,77 @@ void bookcopy_changestatus(int bookcopy_id, char status[]) {
 	}
 	
 	// close the file
+	fclose(fp);
+}
+
+void display_issued_bookcopies(int member_id) {
+	FILE *fp;
+	issuerecord_t rec;
+	// open issue records file
+	fp = fopen(ISSUERECORD_DB, "rb");
+	if(fp==NULL) {
+		perror("cannot open issue record file");
+		return;
+	}
+
+// read records one by one
+	while(fread(&rec, sizeof(issuerecord_t), 1, fp) > 0) {
+		// if member_id is matching and return date is 0, print it.
+		if(rec.memberid == member_id && rec.return_date.day == 0)
+			issuerecord_display(&rec);
+	}
+	// close the file
+	fclose(fp);
+}
+
+void bookcopy_return() {
+	int member_id, record_id;
+	FILE *fp;
+	issuerecord_t rec;
+	int diff_days, found = 0;
+	long size = sizeof(issuerecord_t);
+	// input member id
+	printf("enter member id: ");
+	scanf("%d", &member_id);
+	// print all issued books (not returned yet)
+	display_issued_bookcopies(member_id);
+	// input issue record id to be returned.
+	printf("enter issue record id (to return): ");
+	scanf("%d", &record_id);
+	// open issuerecord file
+	fp = fopen(ISSUERECORD_DB, "rb+");
+	if(fp==NULL) {
+		perror("cannot open issue record file");
+		return;
+	}
+	// read records one by one
+	while(fread(&rec, sizeof(issuerecord_t), 1, fp) > 0) {
+		// find issuerecord id
+		if(record_id == rec.id) {
+			found = 1;
+			// initialize return date
+			rec.return_date = date_current();
+			// check for the fine amount
+			diff_days = date_cmp(rec.return_date, rec.return_duedate);
+			// update fine amount if any
+			if(diff_days > 0)
+				rec.fine_amount = diff_days * FINE_PER_DAY;
+			break;
+		}
+	}
+	
+	if(found) {
+		// go one record back
+		fseek(fp, -size, SEEK_CUR);
+		// overwrite the issue record
+		fwrite(&rec, sizeof(issuerecord_t), 1, fp);
+		// print updated issue record.
+		printf("issue record updated after returning book:\n");
+		issuerecord_display(&rec);
+		// update copy status to available 
+		bookcopy_changestatus(rec.copyid, STATUS_AVAIL);
+	}
+	
+	// close the file.
 	fclose(fp);
 }
