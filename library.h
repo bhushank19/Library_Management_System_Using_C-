@@ -79,6 +79,7 @@ void appoint_librarian();
 
 // librarian functions
 void librarian_area(user_t *u);
+void add_member();
 
 // member functions
 void member_area(user_t *u);
@@ -100,6 +101,7 @@ void sign_in();
 void sign_up();
 void edit_profile(user_t *u);
 void change_password(user_t *u);
+int get_next_user_id();
 
 void user_add(user_t *u);
 int user_find_by_email(user_t *u, char email[]);

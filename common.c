@@ -5,8 +5,9 @@
 
 // user functions
 void user_accept(user_t *u) {
-	printf("id: ");
-	scanf("%d", &u->id);
+	//printf("id: ");
+	//scanf("%d", &u->id);
+	u->id = get_next_user_id();
 	printf("name: ");
 	scanf("%s", u->name);
 	printf("email: ");
@@ -146,4 +147,25 @@ int user_find_by_email(user_t *u, char email[]) {
 	fclose(fp);
 	// return
 	return found;
+}
+
+int get_next_user_id() {
+	FILE *fp;
+	int max = 0;
+	int size = sizeof(user_t);
+	user_t u;
+	// open the file
+	fp = fopen(USER_DB, "rb");
+	if(fp == NULL)
+		return max + 1;
+	// change file pos to the last record
+	fseek(fp, -size, SEEK_END);
+	// read the record from the file
+	if(fread(&u, size, 1, fp) > 0)
+		// if read is successful, get max (its) id
+		max = u.id;
+	// close the file
+	fclose(fp);
+	// return max + 1
+	return max + 1;
 }
