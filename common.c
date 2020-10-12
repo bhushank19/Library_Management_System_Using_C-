@@ -67,6 +67,7 @@ void issuerecord_accept(issuerecord_t *r) {
 	scanf("%d", &r->memberid);
 	printf("issue ");
 	date_accept(&r->issue_date);
+	//r->issue_date = date_current();
 	r->return_duedate = date_add(r->issue_date, BOOK_RETURN_DAYS);
 	memset(&r->return_date, 0, sizeof(date_t));
 	r->fine_amount = 0.0;
