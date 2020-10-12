@@ -6,18 +6,19 @@
 void librarian_area(user_t *u) {
 	int choice;
 	char name[80];
-	char email[30];
+	int user_id;
 	do {
+		printf("\n Librarian ");
 		printf("\n\n0. Sign Out\n1. Add member\n2. Edit Profile\n3. Change Password\n4. Add Book\n5. Find Book\n6. Edit Book\n7. Check Availability\n8. Add Copy\n9. Change Rack\n10. Issue Copy\n11. Return Copy\n12. Take Payment\n13. Payment History\nEnter choice: ");
 		scanf("%d", &choice);
 		switch(choice) {
 			case 1: // Add member
 				    add_member();
 				    break;
-			case 2: // Edit Profile
-			        printf("Enter email: ");
-					scanf("%s", email);
-					edit_profile();
+			case 2: // Edit Profile/update
+			        printf("\nEnter user ID: ");
+					scanf("%d", &user_id);
+					edit_profile(user_id);
 				    break;
 			case 3: // Change Password
 			        change_password();

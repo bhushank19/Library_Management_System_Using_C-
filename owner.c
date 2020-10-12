@@ -5,6 +5,7 @@
 
 void owner_area(user_t *u) {
 	int choice;
+	int user_id;
 	do {
 		printf("\n\n0. Sign Out\n1. Appoint Librarian\n2. Edit Profile\n3. Change Password\n4. Fees/Fine Report\n5. Book Availability\n6. Book Categories/Subjects\nEnter choice: ");
 		scanf("%d", &choice);
@@ -12,7 +13,8 @@ void owner_area(user_t *u) {
 			case 1: // Appoint Librarian
 				    appoint_librarian();
 				    break;
-			case 2:
+			case 2: // Edit Profile
+			        edit_profile(user_id);
 				break;
 			case 3:
 				break;

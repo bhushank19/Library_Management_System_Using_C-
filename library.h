@@ -95,7 +95,8 @@ void bookcopy_return();
 // member functions
 void member_area(user_t *u);
 void bookcopy_checkavail();
-void edit_profile();
+void edit_profile(int user_id);
+void enter_new_details(user_t *nu);
 
 // bookcopy functions
 void bookcopy_accept(bookcopy_t *c);

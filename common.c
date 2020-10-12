@@ -258,50 +258,48 @@ int get_next_issuerecord_id() {
 	return max + 1;
 }
 
-void edit_profile()
-{
-	int id, found=0;
+ void edit_profile(int user_id) {
+	int found = 0;
 	FILE *fp;
-	user_t b;
-	//input user id from user
-	printf("enter user id: ");
-    scanf("%d",&id);
-	//open user file
-	fp=fopen(USER_DB,"rb+");
-	if(fp==NULL)
-	{
-		perror("cannot open users file");
+	user_t user;
+	//open user db file
+	fp = fopen(USER_DB, "rb+");
+	if(fp == NULL){
+		perror("Cannot open user file");
 		exit(1);
 	}
-	// read user one by one and check if user with given id is found.
-	while(fread(&b,sizeof(user_t),1,fp)>0)
-	{
-		if(id==b.id)
-		{
-			found=1;
+	// read books one by one and check if book with given id is found.
+	while(fread(&user, sizeof(user_t),1,fp)>0){
+		if (user_id == user.id){
+			found = 1;
 			break;
 		}
-	}
-	//if found
-	if(found)
-	{
-		// input new user details from user
-		long size=sizeof(user_t);
-		user_t nb;
-		user_accept(&nb);
-		nb.id=b.id;
+	}	
+	if(found) {
+		long size = sizeof(user_t);
+		user_t nu;
+		nu.id = user.id;
+
+		user_display(&user);
+	 
+		printf("email: ");
+		scanf("%s", nu.email);
+		printf("phone: ");
+		scanf("%s", nu.phone);
+
+		strcpy(nu.name, user.name);
+		strcpy(nu.password, user.password);
+		strcpy(nu.role, user.role);
+
 		// take file position one record behind.
-		fseek(fp,-size,SEEK_CUR);
+		fseek(fp, -size, SEEK_CUR);
 		// overwrite user details into the file
-		fwrite(&nb,size,1,fp);
-		printf("profile edited successfully\n");
-        printf("New details are: ");
-        user_display(&nb);
-	}
-	else //if not found
-	//show message to user that user not found.
-	printf("user not found\n");
-	//close user file
+		fwrite(&nu, size, 1, fp);
+		user_display(&nu);
+		printf("user updated.\n");
+
+	} 
+	// close user file
 	fclose(fp);
 }
 
@@ -315,7 +313,7 @@ void change_password()
      //input email from user
 	printf("enter email: ");
 	scanf("%s",email);
-	
+
 	//open users file
 	fp=fopen(USER_DB,"rb+");
 	if(fp==NULL)
