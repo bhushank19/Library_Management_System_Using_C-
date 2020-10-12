@@ -75,7 +75,7 @@ void issuerecord_accept(issuerecord_t *r) {
 }
 
 void issuerecord_display(issuerecord_t *r) {
-	printf("issue record: %d, copy: %d, member: %d, find: %.2lf\n", r->id, r->copyid, r->memberid, r->fine_amount);
+	printf("issue record: %d, copy: %d, member: %d, fine: %.2lf\n", r->id, r->copyid, r->memberid, r->fine_amount);
 	printf("issue ");
 	date_print(&r->issue_date);
 	printf("return due ");
