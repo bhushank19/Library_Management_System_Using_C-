@@ -1,11 +1,11 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include "library.h"
 
 void member_area(user_t *u) {
 	int choice;
 	char name[80];
+	char email[15];
 	do {
 		printf("\n\n0. Sign Out\n1. Find Book\n2. Edit Profile\n3. Change Password\n4. Book Availability\n5. Issued Books\nEnter choice: ");
 		scanf("%d", &choice);
@@ -15,7 +15,11 @@ void member_area(user_t *u) {
 		    		scanf("%s", name);
 			    	book_find_by_name(name);
                     break;
-			case 2:
+			case 2: // Edit Profile
+			        printf("Enter email: ");
+                    scanf("%s",email);
+                    edit_profile();
+
 				break;
 			case 3:
 				break;

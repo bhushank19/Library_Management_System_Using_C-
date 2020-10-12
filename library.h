@@ -95,6 +95,7 @@ void bookcopy_return();
 // member functions
 void member_area(user_t *u);
 void bookcopy_checkavail();
+void edit_profile();
 
 // bookcopy functions
 void bookcopy_accept(bookcopy_t *c);
@@ -111,7 +112,7 @@ void payment_display(payment_t *p);
 // common functions
 void sign_in();
 void sign_up();
-void edit_profile(user_t *u);
+//void edit_profile(user_t *u);
 void change_password(user_t *u);
 int get_next_user_id();
 int get_next_book_id();
