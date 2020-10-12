@@ -5,6 +5,7 @@
 
 #define USER_DB		"users.db"
 #define BOOK_DB		"books.db"
+#define BOOKCOPY_DB	"bookcopies.db"
 
 #define ROLE_OWNER 		"owner"
 #define ROLE_LIBRARIAN 	"librarian"
@@ -83,6 +84,7 @@ void librarian_area(user_t *u);
 void add_member();
 void add_book();
 void book_edit_by_id();
+void bookcopy_add();
 
 // member functions
 void member_area(user_t *u);
@@ -106,6 +108,7 @@ void edit_profile(user_t *u);
 void change_password(user_t *u);
 int get_next_user_id();
 int get_next_book_id();
+int get_next_bookcopy_id();
 
 void user_add(user_t *u);
 int user_find_by_email(user_t *u, char email[]);
