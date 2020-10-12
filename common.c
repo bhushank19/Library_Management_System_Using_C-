@@ -304,3 +304,57 @@ void edit_profile()
 	//close user file
 	fclose(fp);
 }
+
+void change_password()
+{
+    int found = 0;
+    char email[30];
+    char password[10];
+    FILE *fp;
+    user_t u;
+     //input email from user
+	printf("enter email: ");
+	scanf("%s",email);
+	
+	//open users file
+	fp=fopen(USER_DB,"rb+");
+	if(fp==NULL)
+	{
+		perror("cannot open users file");
+		exit(1);
+	}
+	// read books one by one and check if book with given id is found.
+	while(fread(&u,sizeof(user_t),1,fp)>0)
+	{
+		
+		//if(strstr(b.name, name) != NULL)
+		if(strstr(u.email, email)!=NULL ) 
+		{
+			found=1;
+			break;
+		}
+	}
+	//if found
+	if(found)
+	{
+		// input new book details from user
+		long size=sizeof(user_t);
+		user_t p;
+		printf("Enter New Password: ");
+        scanf("%s",password);
+		strcpy(u.password , password);
+
+		// take file position one record behind.
+		fseek(fp, -size, SEEK_CUR);
+
+		// overwrite book details into the file
+		fwrite(&u,size,1,fp);
+
+		printf("Password changed successfully!\n");
+	}
+	else //if not found
+	//show message to user that book not found.
+	printf("user not found\n");
+	//close books file
+	fclose(fp);
+}

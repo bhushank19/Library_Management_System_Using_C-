@@ -21,8 +21,9 @@ void member_area(user_t *u) {
                     edit_profile();
 
 				break;
-			case 3:
-				break;
+			case 3: //change password
+			        change_password();
+				    break;
 			case 4: // Book Availability
 				    bookcopy_checkavail();
 				    break;
