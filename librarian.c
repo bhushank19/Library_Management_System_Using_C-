@@ -36,8 +36,9 @@ void librarian_area(user_t *u) {
 				    break;
 			case 9:
 				break;
-			case 10:
-				break;
+			case 10: //Issue Book Copy
+			         bookcopy_issue();
+				     break;
 			case 11:
 				break;
 			case 12:
@@ -164,4 +165,57 @@ void bookcopy_checkavail_details() {
 	// if no copy is available, print the message. 
 	if(count == 0)
 		printf("no copies availables.\n");
+}
+
+
+void bookcopy_issue() {
+	issuerecord_t rec;
+	FILE *fp;
+	// accept issuerecord details from user
+	issuerecord_accept(&rec);
+	//TODO: if user is not paid, give error & return.
+	// generate & assign new id for the issuerecord
+	rec.id = get_next_issuerecord_id();
+	// open issuerecord file
+	fp = fopen(ISSUERECORD_DB, "ab");
+	if(fp == NULL) {
+		perror("issuerecord file cannot be opened");
+		exit(1);
+	}
+	// append record into the file
+	fwrite(&rec, sizeof(issuerecord_t), 1, fp);
+	// close the file
+	fclose(fp);
+
+	// mark the copy as issued
+	bookcopy_changestatus(rec.copyid, STATUS_ISSUED);
+}
+
+void bookcopy_changestatus(int bookcopy_id, char status[]) {
+	bookcopy_t bc;
+	FILE *fp;
+	long size = sizeof(bookcopy_t);
+	// open book copies file
+	fp = fopen(BOOKCOPY_DB, "rb+");
+	if(fp == NULL) {
+		perror("cannot open book copies file");
+		return;
+	}
+
+	// read book copies one by one
+	while(fread(&bc, sizeof(bookcopy_t), 1, fp) > 0) {
+		// if bookcopy id is matching
+		if(bookcopy_id == bc.id) {
+			// modify its status
+			strcpy(bc.status, status);
+			// go one record back
+			fseek(fp, -size, SEEK_CUR);
+			// overwrite the record into the file
+			fwrite(&bc, sizeof(bookcopy_t), 1, fp);
+			break;
+		}
+	}
+	
+	// close the file
+	fclose(fp);
 }

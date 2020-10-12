@@ -60,8 +60,8 @@ void bookcopy_display(bookcopy_t *c) {
 
 // issuerecord functions
 void issuerecord_accept(issuerecord_t *r) {
-	printf("id: ");
-	scanf("%d", &r->id);
+	//printf("id: ");
+	//scanf("%d", &r->id);
 	printf("copy id: ");
 	scanf("%d", &r->copyid);
 	printf("member id: ");
@@ -222,6 +222,27 @@ int get_next_bookcopy_id() {
 	bookcopy_t u;
 	// open the file
 	fp = fopen(BOOKCOPY_DB, "rb");
+	if(fp == NULL)
+		return max + 1;
+	// change file pos to the last record
+	fseek(fp, -size, SEEK_END);
+	// read the record from the file
+	if(fread(&u, size, 1, fp) > 0)
+		// if read is successful, get max (its) id
+		max = u.id;
+	// close the file
+	fclose(fp);
+	// return max + 1
+	return max + 1;
+}
+
+int get_next_issuerecord_id() {
+	FILE *fp;
+	int max = 0;
+	int size = sizeof(issuerecord_t);
+	issuerecord_t u;
+	// open the file
+	fp = fopen(ISSUERECORD_DB, "rb");
 	if(fp == NULL)
 		return max + 1;
 	// change file pos to the last record
