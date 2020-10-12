@@ -128,9 +128,9 @@ void bookcopy_add() {
 		perror("cannot open book copies file");
 		exit(1);
 	}
-	// append book to the file.
-	fwrite(&b, sizeof(book_t), 1, fp);
+	// append book copy to the file.
+	fwrite(&b, sizeof(bookcopy_t), 1, fp);
 	printf("book copy added in file.\n");
-	// close books file.
+	// close books copies file.
 	fclose(fp);
 }
