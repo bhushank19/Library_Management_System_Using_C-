@@ -83,6 +83,18 @@ void librarian_area(user_t *u);
 // member functions
 void member_area(user_t *u);
 
+// bookcopy functions
+void bookcopy_accept(bookcopy_t *c);
+void bookcopy_display(bookcopy_t *c);
+
+// issuerecord functions
+void issuerecord_accept(issuerecord_t *r);
+void issuerecord_display(issuerecord_t *r);
+
+// payment functions
+void payment_accept(payment_t *p);
+void payment_display(payment_t *p);
+
 // common functions
 void sign_in();
 void sign_up();

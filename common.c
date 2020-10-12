@@ -42,6 +42,70 @@ void book_display(book_t *b) {
 	printf("%d, %s, %s, %s, %.2lf, %s\n", b->id, b->name, b->author, b->subject, b->price, b->isbn);
 }
 
+// bookcopy functions
+void bookcopy_accept(bookcopy_t *c) {
+	printf("id: ");
+	scanf("%d", &c->id);
+	printf("name: ");
+	scanf("%d", &c->bookid);
+	printf("author: ");
+	scanf("%d", &c->rack);
+	strcpy(c->status, STATUS_AVAIL);
+}
+
+void bookcopy_display(bookcopy_t *c) {
+	printf("%d, %d, %d, %s\n", c->id, c->bookid, c->rack, c->status);
+}
+
+// issuerecord functions
+void issuerecord_accept(issuerecord_t *r) {
+	printf("id: ");
+	scanf("%d", &r->id);
+	printf("copy id: ");
+	scanf("%d", &r->copyid);
+	printf("member id: ");
+	scanf("%d", &r->memberid);
+	printf("issue ");
+	date_accept(&r->issue_date);
+	r->return_duedate = date_add(r->issue_date, BOOK_RETURN_DAYS);
+	memset(&r->return_date, 0, sizeof(date_t));
+	r->fine_amount = 0.0;
+}
+
+void issuerecord_display(issuerecord_t *r) {
+	printf("issue record: %d, copy: %d, member: %d, find: %.2lf\n", r->id, r->copyid, r->memberid, r->fine_amount);
+	printf("issue ");
+	date_print(&r->issue_date);
+	printf("return due ");
+	date_print(&r->return_duedate);
+	printf("return ");
+	date_print(&r->return_date);
+}
+
+// payment functions
+void payment_accept(payment_t *p) {
+	printf("id: ");
+	scanf("%d", &p->id);
+	printf("member id: ");
+	scanf("%d", &p->memberid);
+	printf("type (fees/fine): ");
+	scanf("%s", p->type);
+	printf("amount: ");
+	scanf("%d", &p->amount);
+	p->tx_time = date_current();
+	if(strcmp(p->type, PAY_TYPE_FEES) == 0)
+		p->next_pay_duedate = date_add(p->tx_time, MEMBERSHIP_MONTH_DAYS);
+	else
+		memset(&p->next_pay_duedate, 0, sizeof(date_t));
+}
+
+void payment_display(payment_t *p) {
+	printf("payment: %d, member: %d, %s, amount: %.2lf\n", p->id, p->memberid, p->type, p->amount);
+	printf("payment ");
+	date_print(&p->tx_time);
+	printf("payment due");
+	date_print(&p->next_pay_duedate);
+}
 
 void user_add(user_t *u) {
 	// open the file for appending the data
