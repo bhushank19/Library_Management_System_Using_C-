@@ -19,8 +19,9 @@ void librarian_area(user_t *u) {
 					scanf("%s", email);
 					edit_profile();
 				    break;
-			case 3:
-				break;
+			case 3: // Change Password
+			        change_password();
+				    break;
 			case 4: // Add book
 			        add_book();
 				    break;
