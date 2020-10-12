@@ -25,8 +25,9 @@ void librarian_area(user_t *u) {
 		    		scanf("%s", name);
 			    	book_find_by_name(name);
                     break;
-			case 6:
-				break;
+			case 6: // Edit Book
+			        book_edit_by_id();
+				    break;
 			case 7:
 				break;
 			case 8:
@@ -70,5 +71,45 @@ void add_book() {
 	fwrite(&b, sizeof(book_t), 1, fp);
 	printf("book added in file.\n");
 	// close books file.
+	fclose(fp);
+}
+
+void book_edit_by_id() {
+	int id, found = 0;
+	FILE *fp;
+	book_t b;
+	// input book id from user.
+	printf("enter book id: ");
+	scanf("%d", &id);
+	// open books file
+	fp = fopen(BOOK_DB, "rb+");
+	if(fp == NULL) {
+		perror("cannot open books file");
+		exit(1);
+	}
+	// read books one by one and check if book with given id is found.
+	while(fread(&b, sizeof(book_t), 1, fp) > 0) {
+		if(id == b.id) {
+			found = 1;
+			break;
+		}
+	}
+	// if found
+	if(found) {
+		// input new book details from user
+		long size = sizeof(book_t);
+		book_t nb;
+		book_accept(&nb);
+		nb.id = b.id;
+		// take file position one record behind.
+		fseek(fp, -size, SEEK_CUR);
+		// overwrite book details into the file
+		fwrite(&nb, size, 1, fp);
+		printf("book updated.\n");
+	}
+	else // if not found
+		// show message to user that book not found.
+		printf("Book not found.\n");
+	// close books file
 	fclose(fp);
 }

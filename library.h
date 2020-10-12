@@ -82,6 +82,7 @@ void appoint_librarian();
 void librarian_area(user_t *u);
 void add_member();
 void add_book();
+void book_edit_by_id();
 
 // member functions
 void member_area(user_t *u);
