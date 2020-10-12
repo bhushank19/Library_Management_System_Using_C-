@@ -7,7 +7,7 @@ void member_area(user_t *u) {
 	int choice;
 	char name[80];
 	do {
-		printf("\n\n0. Sign Out\n1. Find Book\n2. Edit Profile\n3. Change Password\n4. Book Availability\nEnter choice: ");
+		printf("\n\n0. Sign Out\n1. Find Book\n2. Edit Profile\n3. Change Password\n4. Book Availability\n5. Issued Books\nEnter choice: ");
 		scanf("%d", &choice);
 		switch(choice) {
 			case 1: // Find book
@@ -22,6 +22,10 @@ void member_area(user_t *u) {
 			case 4: // Book Availability
 				    bookcopy_checkavail();
 				    break;
+			case 5: // List issued books
+				    display_issued_bookcopies(u->id);
+				    break;
+		
 		}
 	}while (choice != 0);	
 }
