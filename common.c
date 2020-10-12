@@ -126,6 +126,30 @@ void user_add(user_t *u) {
 	fclose(fp);
 }
 
+void book_find_by_name(char name[]) {
+	FILE *fp;
+	int found = 0;
+	book_t b;
+	// open the file for reading the data
+	fp = fopen(BOOK_DB, "rb");
+	if(fp == NULL) {
+		perror("failed to open books file");
+		return;
+	}
+	// read all books one by one
+	while(fread(&b, sizeof(book_t), 1, fp) > 0) {
+		// if book name is matching partially, found 1
+		if(strstr(b.name, name) != NULL) {
+			found = 1;
+			book_display(&b);
+		}
+	}
+	// close file
+	fclose(fp);
+	if(!found)
+		printf("No such book found.\n");
+}
+
 int user_find_by_email(user_t *u, char email[]) {
 	FILE *fp;
 	int found = 0;

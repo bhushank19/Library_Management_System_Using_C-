@@ -108,4 +108,6 @@ int get_next_book_id();
 
 void user_add(user_t *u);
 int user_find_by_email(user_t *u, char email[]);
+
+void book_find_by_name(char name[]);
 #endif
