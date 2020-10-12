@@ -89,6 +89,7 @@ void bookcopy_checkavail_details();
 
 // member functions
 void member_area(user_t *u);
+void bookcopy_checkavail();
 
 // bookcopy functions
 void bookcopy_accept(bookcopy_t *c);
