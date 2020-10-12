@@ -46,9 +46,9 @@ void book_display(book_t *b) {
 void bookcopy_accept(bookcopy_t *c) {
 	printf("id: ");
 	scanf("%d", &c->id);
-	printf("name: ");
+	printf("book id: ");
 	scanf("%d", &c->bookid);
-	printf("author: ");
+	printf("rack: ");
 	scanf("%d", &c->rack);
 	strcpy(c->status, STATUS_AVAIL);
 }
