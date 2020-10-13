@@ -11,7 +11,7 @@ void librarian_area(user_t *u) {
 	char password[30];
 	do {
 		printf("\n Librarian ");
-		printf("\n\n0. Sign Out\n1. Add member\n2. Edit Profile\n3. Change Password\n4. Add Book\n5. Find Book\n6. Edit Book\n7. Check Availability\n8. Add Copy\n9. Change Rack\n10. Issue Copy\n11. Return Copy\n12. Take Payment\n13. Payment History\nEnter choice: ");
+		printf("\n\n0. Sign Out\n1. Add member\n2. Edit Profile\n3. Change Password\n4. Add Book\n5. Find Book\n6. Edit Book\n7. Check Availability\n8. Add Copy\n9. Change Rack\n10. Issue Copy\n11. Return Copy\n12. Take Payment\n13. Payment History\n14. Display all the members\nEnter choice: ");
 		scanf("%d", &choice);
 		switch(choice) {
 			case 1: // Add member
@@ -60,6 +60,9 @@ void librarian_area(user_t *u) {
 				break;
 			case 13:
 				break;
+			case 14: //display all members
+			         display_all_members();
+			         break;	
 		}
 	}while (choice != 0);		
 }
@@ -305,4 +308,31 @@ void bookcopy_return() {
 	
 	// close the file.
 	fclose(fp);
+}
+
+void display_all_members()
+{
+    FILE *fp;
+	int found = 0;
+    int n=1;
+	user_t u;
+	// open the file for reading the data
+	fp = fopen(USER_DB, "rb");
+	if(fp == NULL) {
+		perror("failed to open books file");
+		return;
+	}
+	// read all books one by one
+	while(fread(&u, sizeof(user_t), 1, fp) > 0) {
+		// if book name is matching partially, found 1
+		if(u.id== n) {
+			found = 1;
+			user_display(&u);
+            n++;
+		}
+	}
+	// close file
+	fclose(fp);
+	if(!found)
+		printf("No such user found.\n");
 }
