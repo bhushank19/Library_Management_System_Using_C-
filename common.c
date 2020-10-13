@@ -258,7 +258,7 @@ int get_next_issuerecord_id() {
 	return max + 1;
 }
 
- void edit_profile(int user_id) {
+ void edit_profile(char email[],char password[]) {
 	int found = 0;
 	FILE *fp;
 	user_t user;
@@ -270,7 +270,7 @@ int get_next_issuerecord_id() {
 	}
 	// read books one by one and check if book with given id is found.
 	while(fread(&user, sizeof(user_t),1,fp)>0){
-		if (user_id == user.id){
+		if (strcmp(email,user.email) == 0 && strcmp(password,user.password) == 0) {
 			found = 1;
 			break;
 		}
@@ -331,7 +331,7 @@ void change_password(char email[],char password[])
 		//printf("email: ");
 		//scanf("%s", nu.email);
 
-		printf("password: ");
+		printf("New_password: ");
 		scanf("%s",nu.password);
 
 		strcpy(nu.email, user.email);

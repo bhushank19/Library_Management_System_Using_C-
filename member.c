@@ -19,11 +19,12 @@ void member_area(user_t *u) {
 			    	book_find_by_name(name);
                     break;
 			case 2: // Edit Profile
-			        printf("Enter user ID: ");
-                    scanf("%d",&user_id);
-                    edit_profile(user_id);
-
-				break;
+			         printf("\nEnter user email   :");
+                    scanf("%s",email);
+                    printf("\nEnter user password   :");
+                    scanf("%s",password);
+                    edit_profile(email,password);
+					break;
 			case 3: //change password
 			        printf("\nEnter Email: ");
 					scanf("%s", email);

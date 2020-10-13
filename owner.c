@@ -14,7 +14,7 @@ void owner_area(user_t *u) {
 				    appoint_librarian();
 				    break;
 			case 2: // Edit Profile
-			        edit_profile(user_id);
+			       // edit_profile(user_id);
 				break;
 			case 3:
 				break;

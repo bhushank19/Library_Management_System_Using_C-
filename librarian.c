@@ -18,10 +18,12 @@ void librarian_area(user_t *u) {
 				    add_member();
 				    break;
 			case 2: // Edit Profile/update
-			        printf("\nEnter user ID: ");
-					scanf("%d", &user_id);
-					edit_profile(user_id);
-				    break;
+			          printf("\nEnter user email   :");
+                    scanf("%s",email);
+                    printf("\nEnter user password   :");
+                    scanf("%s",password);
+                    edit_profile(email,password);
+					break;
 			case 3: // Change Password
 			        printf("\nEnter user email   :");
                     scanf("%s",email);

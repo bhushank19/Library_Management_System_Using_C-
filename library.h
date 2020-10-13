@@ -111,8 +111,7 @@ void payment_display(payment_t *p);
 // common functions
 void sign_in();
 void sign_up();
-void edit_profile(int user_id);
-void enter_new_details(user_t *nu);
+void edit_profile(char email[],char password[]);
 void change_password(char email[],char password[]);
 int get_next_user_id();
 int get_next_book_id();
