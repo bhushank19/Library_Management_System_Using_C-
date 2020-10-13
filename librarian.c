@@ -48,8 +48,9 @@ void librarian_area(user_t *u) {
 			case 8: // Add Copy
 			        bookcopy_add();
 				    break;
-			case 9:
-				break;
+			case 9: // Change Rack
+			        change_rack();
+				    break;
 			case 10: //Issue Book Copy
 			         bookcopy_issue();
 				     break;
@@ -336,3 +337,50 @@ void display_all_members()
 	if(!found)
 		printf("No such user found.\n");
 }
+
+void change_rack()
+{
+	int copy_id, found = 0;
+	long int size = sizeof(bookcopy_t);
+	bookcopy_t bookcopy;
+
+	// open book copy file
+	FILE *fp = fopen(BOOKCOPY_DB, "rb+");
+	if (fp == NULL)
+	{
+		perror("failed to open bookcopy file");
+		return;
+	} 
+
+	// accept copy id
+	printf ("enter copy id : ");
+	scanf("%d",&copy_id);
+
+	// read book copy file 
+	while (fread(&bookcopy, size, 1, fp)> 0)
+	{
+		//if copy id is found
+		if(copy_id == bookcopy.id)
+		{
+			found = 1;
+			printf("current rack : %d\n", bookcopy.rack);
+
+			printf ("new rack : ");
+			scanf("%d",&bookcopy.rack);
+
+			bookcopy.id = copy_id;
+			strcpy(bookcopy.status, STATUS_AVAIL);
+			break;
+		}
+	}
+	// adjust  ptr position behind
+	fseek(fp, -size , SEEK_CUR);
+	// write into file
+	fwrite(&bookcopy, size , 1,fp);
+	fclose(fp);
+	if (found == 0)
+		printf("\ncopy id not found");
+	else 
+		printf("\ncopy updated in the new rack");
+}
+
