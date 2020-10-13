@@ -96,6 +96,7 @@ void display_all_members();
 void change_rack();
 void fees_payment_add();
 void payment_history(int memberid);
+int is_paid_member(int memberid);
 
 
 // member functions

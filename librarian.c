@@ -423,3 +423,26 @@ void payment_history(int memberid) {
 	// close file	
 	fclose(fp);
 }
+
+int is_paid_member(int memberid) {
+	date_t now = date_current();
+	FILE *fp;
+	payment_t pay;
+	int paid = 0;
+	// open file
+	fp = fopen(PAYMENT_DB, "rb");
+	if(fp==NULL) {
+		perror("cannot open payment file");
+		return 0;
+	}
+	// read payment one by one till eof
+	while(fread(&pay, sizeof(payment_t), 1, fp) > 0) {
+		if(pay.memberid == memberid && pay.next_pay_duedate.day != 0 && date_cmp(now, pay.next_pay_duedate) < 0) {
+			paid = 1;
+			break;
+		}
+	}
+	// close file	
+	fclose(fp);
+	return paid;
+}
