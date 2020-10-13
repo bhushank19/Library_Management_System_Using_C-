@@ -303,56 +303,50 @@ int get_next_issuerecord_id() {
 	fclose(fp);
 }
 
-void change_password()
+void change_password(char email[],char password[])
 {
-    int found = 0;
-    char email[30];
-    char password[10];
-    FILE *fp;
-    user_t u;
-     //input email from user
-	printf("enter email: ");
-	scanf("%s",email);
-
-	//open users file
-	fp=fopen(USER_DB,"rb+");
-	if(fp==NULL)
-	{
-		perror("cannot open users file");
+	int found = 0;
+	FILE *fp;
+	user_t user;
+	//open user db file
+	fp = fopen(USER_DB, "rb+");
+	if(fp == NULL){
+		perror("Cannot open user file");
 		exit(1);
 	}
 	// read books one by one and check if book with given id is found.
-	while(fread(&u,sizeof(user_t),1,fp)>0)
-	{
-		
-		//if(strstr(b.name, name) != NULL)
-		if(strstr(u.email, email)!=NULL ) 
-		{
-			found=1;
+	while(fread(&user, sizeof(user_t),1,fp)>0){
+		if (strcmp(email,user.email) == 0 && strcmp(password,user.password) == 0){
+			found = 1;
 			break;
 		}
-	}
-	//if found
-	if(found)
-	{
-		// input new book details from user
-		long size=sizeof(user_t);
-		user_t p;
-		printf("Enter New Password: ");
-        scanf("%s",password);
-		strcpy(u.password , password);
+	}	
+	if(found) {
+		long size = sizeof(user_t);
+		user_t nu;
+		nu.id = user.id;
+
+		user_display(&user);
+	 
+		//printf("email: ");
+		//scanf("%s", nu.email);
+
+		printf("password: ");
+		scanf("%s",nu.password);
+
+		strcpy(nu.email, user.email);
+		strcpy(nu.name, user.name);
+		strcpy(nu.phone, user.phone);
+        strcpy(nu.role, user.role);
 
 		// take file position one record behind.
 		fseek(fp, -size, SEEK_CUR);
+		// overwrite user details into the file
+		fwrite(&nu, size, 1, fp);
+		user_display(&nu);
+		printf("user password updated.\n");
 
-		// overwrite book details into the file
-		fwrite(&u,size,1,fp);
-
-		printf("Password changed successfully!\n");
-	}
-	else //if not found
-	//show message to user that book not found.
-	printf("user not found\n");
-	//close books file
+	} 
+	// close user file
 	fclose(fp);
-}
+} 

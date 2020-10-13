@@ -6,6 +6,8 @@ void member_area(user_t *u) {
 	int choice;
 	char name[80];
 	int user_id;
+	char email[30];
+	char password[30];
 	do {
 		printf("Member");
 		printf("\n\n0. Sign Out\n1. Find Book\n2. Edit Profile\n3. Change Password\n4. Book Availability\n5. Issued Books\nEnter choice: ");
@@ -23,7 +25,11 @@ void member_area(user_t *u) {
 
 				break;
 			case 3: //change password
-			        change_password();
+			        printf("\nEnter Email: ");
+					scanf("%s", email);
+					printf("\nEnter Password");
+					scanf("%s", password);
+			        change_password(email, password);
 				    break;
 			case 4: // Book Availability
 				    bookcopy_checkavail();
