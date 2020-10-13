@@ -87,19 +87,19 @@ void issuerecord_display(issuerecord_t *r) {
 
 // payment functions
 void payment_accept(payment_t *p) {
-	printf("id: ");
-	scanf("%d", &p->id);
+	//printf("id: ");
+	//scanf("%d", &p->id);
 	printf("member id: ");
 	scanf("%d", &p->memberid);
-	printf("type (fees/fine): ");
-	scanf("%s", p->type);
+	//printf("type (fees/fine): ");
+	//scanf("%s", p->type);
 	printf("amount: ");
-	scanf("%d", &p->amount);
+	scanf("%lf", &p->amount);
 	p->tx_time = date_current();
-	if(strcmp(p->type, PAY_TYPE_FEES) == 0)
+	//if(strcmp(p->type, PAY_TYPE_FEES) == 0)
 		p->next_pay_duedate = date_add(p->tx_time, MEMBERSHIP_MONTH_DAYS);
-	else
-		memset(&p->next_pay_duedate, 0, sizeof(date_t));
+	//else
+		//memset(&p->next_pay_duedate, 0, sizeof(date_t));
 }
 
 void payment_display(payment_t *p) {
@@ -244,6 +244,27 @@ int get_next_issuerecord_id() {
 	issuerecord_t u;
 	// open the file
 	fp = fopen(ISSUERECORD_DB, "rb");
+	if(fp == NULL)
+		return max + 1;
+	// change file pos to the last record
+	fseek(fp, -size, SEEK_END);
+	// read the record from the file
+	if(fread(&u, size, 1, fp) > 0)
+		// if read is successful, get max (its) id
+		max = u.id;
+	// close the file
+	fclose(fp);
+	// return max + 1
+	return max + 1;
+}
+
+int get_next_payment_id() {
+	FILE *fp;
+	int max = 0;
+	int size = sizeof(payment_t);
+	payment_t u;
+	// open the file
+	fp = fopen(PAYMENT_DB, "rb");
 	if(fp == NULL)
 		return max + 1;
 	// change file pos to the last record

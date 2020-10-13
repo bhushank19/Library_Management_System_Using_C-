@@ -4,7 +4,7 @@
 #include "library.h"
 
 void librarian_area(user_t *u) {
-	int choice;
+	int choice, memberid;
 	char name[80];
 	int user_id;
 	char email[30];
@@ -57,10 +57,14 @@ void librarian_area(user_t *u) {
 			case 11: // Return Book Copy
 				     bookcopy_return();
 				     break;
-			case 12:
-				break;
-			case 13:
-				break;
+			case 12: // Take Payment
+			         fees_payment_add();
+				     break;
+			case 13: // Payment History
+			         printf("enter member id of the member: ");
+				     scanf("%d", &memberid);
+				     payment_history(memberid);
+				     break;
 			case 14: //display all members
 			         display_all_members();
 			         break;	
@@ -384,3 +388,38 @@ void change_rack()
 		printf("\ncopy updated in the new rack");
 }
 
+void fees_payment_add() {
+	FILE *fp;
+	// accept fees payment
+	payment_t pay;
+	payment_accept(&pay);
+	pay.id = get_next_payment_id();
+	// open the file
+	fp = fopen(PAYMENT_DB, "ab");
+	if(fp == NULL) {
+		perror("cannot open payment file");
+		exit(1);
+	}
+	// append payment data at the end of file
+	fwrite(&pay, sizeof(payment_t), 1, fp);
+	// close the file
+	fclose(fp);
+}
+
+void payment_history(int memberid) {
+	FILE *fp;
+	payment_t pay;
+	// open file
+	fp = fopen(PAYMENT_DB, "rb");
+	if(fp==NULL) {
+		perror("cannot open payment file");
+		return;
+	}
+	// read payment one by one till eof
+	while(fread(&pay, sizeof(payment_t), 1, fp) > 0) {
+		if(pay.memberid == memberid)
+			payment_display(&pay);
+	}
+	// close file	
+	fclose(fp);
+}

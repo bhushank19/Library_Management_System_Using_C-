@@ -7,6 +7,7 @@
 #define BOOK_DB		"books.db"
 #define BOOKCOPY_DB	"bookcopies.db"
 #define ISSUERECORD_DB	"issuerecord.db"
+#define PAYMENT_DB	"payment.db"
 
 #define ROLE_OWNER 		"owner"
 #define ROLE_LIBRARIAN 	"librarian"
@@ -93,6 +94,9 @@ void display_issued_bookcopies(int member_id);
 void bookcopy_return();
 void display_all_members();
 void change_rack();
+void fees_payment_add();
+void payment_history(int memberid);
+
 
 // member functions
 void member_area(user_t *u);
@@ -119,6 +123,7 @@ int get_next_user_id();
 int get_next_book_id();
 int get_next_bookcopy_id();
 int get_next_issuerecord_id();
+int get_next_payment_id();
 
 void user_add(user_t *u);
 int user_find_by_email(user_t *u, char email[]);
