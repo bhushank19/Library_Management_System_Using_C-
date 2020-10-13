@@ -196,7 +196,11 @@ void bookcopy_issue() {
 	FILE *fp;
 	// accept issuerecord details from user
 	issuerecord_accept(&rec);
-	//TODO: if user is not paid, give error & return.
+	// if user is not paid, give error & return.
+	if(!is_paid_member(rec.memberid)) {
+		printf("member is not paid.\n");
+		return;
+	}
 	// generate & assign new id for the issuerecord
 	rec.id = get_next_issuerecord_id();
 	// open issuerecord file
