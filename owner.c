@@ -16,11 +16,12 @@ void owner_area(user_t *u) {
 			case 2: // Edit Profile
 			       // edit_profile(user_id);
 				break;
-			case 3:
+			case 3: // Change Password
 				break;
 			case 4:
 				break;
-			case 5:
+			case 5: 
+			        bookcopy_checkavail();
 				break;
 			case 6:
 				break;
